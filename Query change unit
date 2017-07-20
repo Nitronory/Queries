@@ -1,0 +1,20 @@
+DECLARE @item_code as varchar(15), @new_unit as varchar(3), @old_unit as varchar(3), @Update as varchar(1), @UTENTE as varchar(10)
+ 
+set @item_code = '__insert_here_item_to_change__'
+set @new_unit = '__new__unit__'
+set @old_unit = '__old__unit__'
+set @UTENTE = '__username__'
+ 
+IF not exists (select * from *** where CODE = @item_code)
+select 'This Item Code does not exist'
+else if not exists (select * from TABELLE where TABELLA = 'UM' and ELEMENTO = @new_unit)
+      select 'Unit '+@new_unit+' does not exist'
+      else if not exists (select * from MAT where CODE = @item_code and UOM_UM = @old_unit)
+             select 'The current unit of Item Code '+@Item_code+' is not '+@old_unit
+else
+BEGIN
+update M set M.UOM_UM = TBUM.ELEMENTO, DATAULTIMAMODIFICA = GETDATE(), UTENTE = @UTENTE from MAT M join TABELLE TBUM on TBUM.ELEMENTO = @new_unit where CODE = @item_code;
+update D set D.UOM_UM = TBUM.ELEMENTO, DATAULTIMAMODIFICA = GETDATE(), UTENTE = @UTENTE from DIBA D join TABELLE TBUM on TBUM.ELEMENTO = @new_unit where CODE = @item_code and UOM_UM = @old_unit;
+select 'Update done on', '', '' union select M.***, M.***, D.*** from *** D join *** M on M.*** = D.*** where D.*** = @item_code and D.*** = @UTENTE;
+END
+ 
